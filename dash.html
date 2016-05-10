@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SCUP - Client Dash</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+	 
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      .stream-main { margin-left: 26px; min-height: 83px; position: relative; border-radius: 4px; width: 30%; margin: auto; margin-bottom: 10px; }
+      .avatar {padding: 2px;}
+      #conteudo { margin: 20px; }
+      #thumb {float: left; margin-left: 20px; margin-right: 20px;}
+      #link {margin-top: 5px;}
+      .tag {border: 1px solid #c9c9c9; border-radius: 4px; width: 94px; margin: 5px; text-align: center; }
+		.count { float: left; width: 370px;border: 5px solid #c9c9c9; border-radius: 4px; height: 250px;font-size: 125px; text-align: center;padding: 45px; padding-left: 5px; }
+		.count.sentimentNegative {border-color: orange;}
+		.count.sentimentPositive {border-color: green;}
+      .search {text-align: right; margin-right: 15px; margin-bottom: 5px;}
+      .tags {float: left; margin: 30px;margin-right: 30px;}
+    </style>
+  </head>
+  <body>
+  	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  	<script src="/socket.io/socket.io.js"></script>
+  	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+		var socket = io();
+		socket.on('count_itens', function(msg){
+			   $('.countTotal').text(msg);		      	
+	    });
+
+	    socket.on('count_sentiment_negative', function(msg){
+			   $('.sentimentNegative').text(msg);
+	    });
+
+	    socket.on('count_sentiment_positive', function(msg){
+			   $('.sentimentPositive').text(msg);
+	    });
+
+	    socket.on('tag1', function(msg){
+			   $('.t1').text(msg);	
+	    });
+
+	    socket.on('tag2', function(msg){
+		  	$('.t2').text(msg);
+	    });
+
+
+
+	</script>
+	
+
+    <div id="dash">
+    	<div class="count countTotal"></div>
+    	<div class="count sentimentNegative"></div>
+    	<div class="count sentimentPositive"></div>
+    	<div class="tags">
+    		<h1>Retweet:</h1><h2 class="t1"></h2>
+    		<h1>Tem Eduardo:</h1><h2 class="t2"></h2>
+    	</div>
+    </div>
+    
+  </body>
+</html>

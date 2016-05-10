@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SCUP - Mentions Twitter Stream</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; background: #0d0d0d; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      .stream-main { margin-left: 26px; min-height: 83px; position: relative; border-radius: 4px; width: 30%; margin: auto; margin-bottom: 10px; background: white;}
+      .avatar {padding: 2px;}
+      #conteudo { margin: 20px; }
+      #thumb {float: left; margin-left: 20px; margin-right: 20px;}
+      #link {margin-top: 5px;}
+      .tag {border: 1px solid #c9c9c9; border-radius: 4px; width: 94px; margin: 5px; text-align: center; }
+      .search {text-align: right; margin-right: 15px; margin-bottom: 5px;}
+    </style>
+  </head>
+  <body>
+  	<script src="/socket.io/socket.io.js"></script>
+  	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+	  var socket = io();
+	  socket.on('stats', function(msg){
+      var link = 'http://twitter.com/'+msg.usuario+'/status/'+msg.id;
+      var color = "";
+      if(msg.sentiment == 'positive') {
+        color = 'green';
+      }else{
+        color = 'orange';
+      }
+      console.log(msg.tag);
+      var tag = "";
+      if (!(msg.tag === 'undefined' || msg.tag === null)) {
+         tag = '<div class="tag">'+msg.tag+'</div>';
+      }
+      var div = "<div class='stream-main' style='border: 3px solid "+color+";'>"+tag+"<div class='content'><div id='thumb'><img src='"+msg.profile+"'></div><div id='conteudo'>"+msg.message+"<div id='link'><a href="+link+" target='_blank'>Ver no site</a></div></div></div><div class='search'>"+msg.network+' - '+msg.search+"</div>"+msg.id+"</div>"
+      $('body').prepend(div);
+    });
+
+	</script>
+	
+  
+    <ul id="messages"></ul>
+    
+  </body>
+</html>

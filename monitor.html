@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SCUP - Server Dashboard</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      .stream-main { margin-left: 26px; min-height: 83px; position: relative; border-radius: 4px; width: 30%; margin: auto; margin-bottom: 10px; }
+      .avatar {padding: 2px;}
+      #conteudo { margin: 20px; }
+      #thumb {float: left; margin-left: 20px; margin-right: 20px;}
+      #link {margin-top: 5px;}
+      .search {text-align: right; margin-right: 15px; margin-bottom: 5px;}
+    </style>
+  </head>
+  <body style="display: flex;">
+
+	
+	<div class="main">
+			<div class="content" style="background-color: rgb(255,166,0);height: 1px;">
+				<p class="title">Item life cycle</p>
+			</div>
+	</div>	
+	<div class="plug sentiment">
+			<div class="content Sentiment" style="background-color: rgb(255,166,0);height: 1px;">
+				<p class="title">Sentiment</p>
+			</div>
+	</div>	
+
+	<div class="plug tag">
+			<div class="content Tag" style="background-color: rgb(255,166,0);height: 1px;">
+				<p class="title">Tag</p>
+			</div>
+	</div>
+
+	<div class="plug update">
+			<div class="content Update" style="background-color: rgb(255,166,0);height: 1px;">
+				<p class="title">Update</p>
+			</div>
+	</div>		
+
+	<div class="plug realtime">
+			<div class="content RealTime" style="background-color: rgb(255,166,0);height: 1px;">
+				<p class="title">Realtime</p>
+			</div>
+	</div>	
+
+	<div class="plug dash">
+			<div class="content Dash" style="background-color: rgb(255,166,0);height: 1px;">
+				<p class="title">Dash</p>
+			</div>
+	</div>	
+
+
+  	<script src="/socket.io/socket.io.js"></script>
+  	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+	  var socket = io();
+
+	  var mainBar = document.querySelector('.main .content');
+
+	  socket.on('init-item', function(msg){
+	  	mainBar.style.height = (parseInt(mainBar.style.height)+5)+'px'
+	  	var co = (parseInt(mainBar.style.height)/5)/15;
+	  	mainBar.style.backgroundColor = 'rgb(255,'+parseInt((1-co)*255)+',0)';
+
+	  });
+
+	  socket.on('item-out', function(msg){
+	  	mainBar.style.height = (parseInt(mainBar.style.height)-5)+'px';
+
+	  	document.querySelector('.Dash').style.height = (parseInt(document.querySelector('.Dash').style.height)-5)+'px';
+	  });
+	  
+	  socket.on('init-plug', function(msg){
+		if (msg.in !== 'Dash' && msg.in !== false){
+			var initbar = document.querySelector('.' + msg.in);	
+			initbar.style.height = (parseInt(initbar.style.height)-5)+'px'
+		}
+			var outbar = document.querySelector('.' + msg.out);
+			outbar.style.height = (parseInt(outbar.style.height)+5)+'px'
+	  });
+
+	
+
+	</script>
+		
+	
+	<style>
+
+
+	.main{
+		height: 400px;
+		width: 200px;
+		
+	}
+
+	.plug{
+		height: 400px;
+		width: 200px;
+		
+	}
+	
+	p.title {
+		color: black;
+		font-weight: 700;
+		font-size: 20px;
+		text-align: center;
+		margin-top: 20px;		
+	}
+
+	.main .content{
+		background: orange;
+		height: 30px;
+		width: 198px;
+		position: absolute;
+		bottom: 0px;
+		border-radius: 4px;
+		margin-bottom: 102px;
+		border: 1px solid black;
+		border-radius: 4px;
+
+	}
+
+	.plug .content{
+		background: orange;
+		height: 30px;
+		width: 198px;
+		position: absolute;
+		bottom: 0px;
+		border-radius: 4px;
+		margin-bottom: 102px;
+		border: 1px solid black;
+		border-radius: 4px;
+
+	}
+
+	.dash .content1{
+		background: green;
+		height: 1px;
+		width: 198px;
+		position: absolute;
+		bottom: 0px;
+		border-radius: 4px;
+
+	}
+	</style>
+    
+  </body>
+</html>
