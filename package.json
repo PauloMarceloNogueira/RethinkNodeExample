@@ -1,0 +1,16 @@
+{
+  "name" : "twitterconsumer",
+  "version" : "1.0.0",
+  "description" : "Consumidor de Twitter em RealTime",
+  "scripts" : {
+      "start" : "nodemon itemPipeline.js && nodemon twitterconsumer.js && nodemon interfaceWeb"
+  },
+  "dependencies" : {
+    "rethinkdbdash" : "*",
+    "express" : "*",
+    "body-parser" : "*",
+    "http" : "*",
+    "socket.io" : "*",
+    "twit" : "*"
+  }
+}
