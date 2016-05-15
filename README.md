@@ -1,6 +1,6 @@
 # README #
 
-# SCUP API JS #
+# TWITTER CONSUMER REALTIME - USING PIPELINE DESIGN #
 Middleware para acesso a API do Scup
 
 
